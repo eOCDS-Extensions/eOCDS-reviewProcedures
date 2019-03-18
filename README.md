@@ -28,7 +28,7 @@ The following measures can typically be ordered:
 - Annulment of an unlawful contracting decision
 - Positive correction of any unlawful document or contracting decision, for example, an order of the contracting authority to amend or delete an unlawful clause in the tender documents or to reinstate an economic operator that had been unlawfully excluded.
 
-#### Set aside of decisions
+#### Annulment of a Concluded Contract
 
 The annulment of an already concluded contract or a declaration that the contract is null and void by a third party to the contract is an available remedy, which applied at least if the contract is concluded during the standstill period. The possibility to annul a concluded contract is a crucial remedy since in jurisdictions without this possibility damages remain the only available remedy after this event.  
 
