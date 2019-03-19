@@ -187,7 +187,7 @@ As we can see, by rejecting the only requested action, the Procuring Entity reje
         "description": "Complaint brief description",
         "complainer": {},
         "adressedTo": "reviewBody",
-        "previousProcedign": "complaint-1"
+        "previousProceeding": "complaint-1"
         "milestones": [
           {
             "id": "1",
