@@ -1,0 +1,340 @@
+{
+  "definitions": {
+    "Tender": {
+      "properties": {
+        "reviewPeriod": {
+          "title": "Review Period",
+          "description": "The certian period to complain on published conditions",
+          "$ref": "#/definitions/Period"
+        }
+      }
+    },
+    "ReviewProceedings": {
+      "title": "Review Proceedings",
+      "description": "General information related to reviews under this contracting process together with collected complaints and reviews",
+      "type": "object",
+      "properties": {
+        "complaints": {
+          "title": "Complaints",
+          "description": "Complaints to the conditions and decisions",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Complaint"
+          }
+        },
+        "reviews": {
+          "title": "Reviews",
+          "description": "Review Procedures conducted due to complaints received",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Review"
+          }
+        }
+      }
+    },
+    "Complaint": {
+      "title": "Complaint",
+      "description": "A complaint submitted against conditions or decision made",
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "Identifier",
+          "description": "Unique identifier for this complaint",
+          "type": [
+            "string",
+            "integer"
+          ]
+        },
+        "date": {
+          "title": "Submission date",
+          "description": "Date of submission of this complaint",
+          "type": "string",
+          "format": "date-time"
+        },
+        "status": {
+          "title": "Status",
+          "description": "The current status of the complaint",
+          "type": "string",
+          "enum": [],
+          "openCodelist": false,
+          "codelist": "complaintStatuses.csv"
+        },
+        "statusDetails": {
+          "title": "Status details",
+          "description": "The details of current status of the complaint",
+          "type": "string",
+          "enum": [],
+          "openCodelist": false,
+          "codelist": "complaintStatusDetails.csv"
+        },
+        "description": {
+          "title": "Description",
+          "description": "Free-text description for this complaint provided by complainer",
+          "type": "string"
+        },
+        "complainer": {
+          "title": "Complainer",
+          "description": "Legal entity who have submitted this complaint",
+          "$ref": "#/definitions/OrganizationReference"
+        },
+        "adressedTo": {
+          "title": "Adressed to",
+          "description": "Body challenged by this complait",
+          "type": "string",
+          "enum": [
+            "reviewBody",
+            "procuringEntity"
+          ],
+          "openCodelist": false,
+          "codelist": "complaintAddressedTo.csv"
+        },
+        "milestones": {
+          "title": "Milestones",
+          "description": "A list of milestones associated with the complaint",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Milestone"
+          }
+        },
+        "documents": {
+          "title": "Documents",
+          "description": "All documents and attachments related to the complaint",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Document"
+          }
+        },
+        "objections": {
+          "title": "Objections",
+          "description": "A list of precise subjects and requests under this complaint",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Objection"
+          }
+        },
+        "previousProceeding": {
+          "title": "Previous proceeding",
+          "description": "If this complaint is escalated from previous one sent to and rejected or declined by Procuring Entity, the id of such complaint could be specified to fulfill the requirements dual-stage review system",
+          "type": "string"
+        }
+      }
+    },
+    "Review": {
+      "title": "Review procedure",
+      "description": "Review Procedure conducted agains one or more complaints",
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "Identifier",
+          "description": "Unique identifier for this procedure",
+          "type": [
+            "string",
+            "integer"
+          ]
+        },
+        "date": {
+          "title": "Initiation date",
+          "description": "Date of initiation of this procedure",
+          "type": "string",
+          "format": "date-time"
+        },
+        "status": {
+          "title": "Status",
+          "description": "The current status of the procedure",
+          "type": "string",
+          "enum": [],
+          "openCodelist": false,
+          "codelist": "reviewProcedureStatuses.csv"
+        },
+        "statusDetails": {
+          "title": "Status details",
+          "description": "The details of current status of the procedure",
+          "type": "string",
+          "enum": [
+            "negative",
+            "partiallyPositive",
+            "positive"
+          ],
+          "openCodelist": false,
+          "codelist": "reviewProcedureStatusDetails.csv"
+        },
+        "relatedComplaints": {
+          "title": "Related complaints",
+          "description": "A list of the id's of complaints covered by this procedure",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "milestones": {
+          "title": "Milestones",
+          "description": "A list of milestones associated with the procedure",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Milestone"
+          }
+        },
+        "documents": {
+          "title": "Documents",
+          "description": "All documents and attachments related to the procedure",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Document"
+          }
+        },
+        "objectionResponses": {
+          "title": "Objection responses",
+          "description": "A list of responses against all actions requested under relatede complaints",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Objection"
+          }
+        }
+      }
+    },
+    "Objection": {
+      "title": "Objection",
+      "description": "A precise subject and requests expected to be responded",
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "Identifier",
+          "description": "Unique identifier for this objection",
+          "type": [
+            "string",
+            "integer"
+          ]
+        },
+        "description": {
+          "title": "Description",
+          "description": "Bojections' brief description provided by complainer",
+          "type": "string"
+        },
+        "status": {
+          "title": "Status",
+          "description": "The current status of the objection",
+          "type": "string",
+          "enum": [],
+          "openCodelist": false,
+          "codelist": "objectionStatuses.csv"
+        },
+        "statusDetails": {
+          "title": "Status details",
+          "description": "The details of current status of the objection",
+          "type": "string",
+          "enum": [],
+          "openCodelist": false,
+          "codelist": "objectionStatusDetails.csv"
+        },
+        "relatesTo": {
+          "title": "Relates to",
+          "description": "The schema element that the objection affects. For example objection may be defined against lot or against award",
+          "type": "string",
+          "enum": [
+            "lot",
+            "award"
+          ],
+          "openCodelist": false,
+          "codelist": "objectionRelatesTo.csv"
+        },
+        "relatedItem": {
+          "title": "Related item",
+          "description": "The id of the schema element which the objection affects on. ",
+          "type": "string"
+        },
+        "classification": {
+          "title": "Classification",
+          "description": "Classification according to Review Bodies' approach to systemize subjects of complaint",
+          "$ref": "#/definitions/Classification"
+        },
+        "requestedActions": {
+          "title": "Requested actions",
+          "description": "A list of precise actions requested under this objection",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RequestedAction"
+          }
+        }
+      }
+    },
+    "RequestedAction": {
+      "title": "Requested action",
+      "description": "A precise action requested to satisfy an objection under complaint",
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "Identifier",
+          "description": "Unique identifier for this requested action",
+          "type": [
+            "string",
+            "integer"
+          ]
+        },
+        "type": {
+          "title": "Type",
+          "description": "The type of the requested action",
+          "type": "string",
+          "enum": [
+            "interimMeasure",
+            "setAside",
+            "damages",
+            "annulContract"
+          ],
+          "openCodelist": false,
+          "codelist": "requestedActionTypes.csv"
+        },
+        "source": {
+          "title": "Source",
+          "description": "The party that will be obliged to take the requested action if the objection is satisfied",
+          "type": "string",
+          "enum": [
+            "reviewBody",
+            "procuringEntity"
+          ],
+          "openCodelist": false,
+          "codelist": "requestedActionSource.csv"
+        },
+        "description": {
+          "title": "Description",
+          "description": "Free text description of the requested action provided by complainer",
+          "type": "string"
+        }
+      }
+    },
+    "objectionResponse": {
+      "properties": {
+        "id": {
+          "title": "Identifier",
+          "description": "Unique identifier for this response on objection",
+          "type": [
+            "string",
+            "integer"
+          ]
+        },
+        "date": {
+          "title": "Date",
+          "description": "Date when response is published",
+          "type": "string",
+          "format": "date-time"
+        },
+        "requestedAction": "request-1-1-1",
+        "decision": {
+          "title": "Decision",
+          "description": "The code of decision made",
+          "type": "string",
+          "enum": [
+            "rejected",
+            "satisfied"
+          ],
+          "openCodelist": false,
+          "codelist": "objectionResopnseDecisions.csv"
+        },
+        "justification": {
+          "title": "Justification",
+          "description": "Free text justification for response provided by adressed Party",
+          "type": "string"
+        }
+      }
+    }
+  }
+}
