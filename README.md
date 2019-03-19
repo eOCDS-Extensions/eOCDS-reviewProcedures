@@ -336,8 +336,8 @@ And being affected, tenderer1 rises with a complaint: Tenderer1 wants to appeal 
 
 > In different legislative frameworks it may be permitted or prohibited to appeal or review two cases within a single procedure. That's why the proposed approach designed in a way that will allow covering different needs and permissions:
 >- united appeal covering several cases submitted by tenderer - one review procedure 
->- sevaral appeals submitted by tenderer or tenderers - sevaral review procudures
->- sevaral appeals submitted by tenderer or tenderers - one review procudure
+>- several appeals submitted by tenderer or tenderers - several review procudures
+>- several appeals submitted by tenderer or tenderers - one review procudure
 
 > An issue here - [**United appeal covering several cases submitted by tenderer - splitting into several review procedures. Does it makes sense?**](https://github.com/PaulBoroday/eOCDS-reviewProcedures/issues/2)
 
