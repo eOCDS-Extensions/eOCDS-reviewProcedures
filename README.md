@@ -2,13 +2,14 @@
 
 Extension to cover the legal actions which allow EOs to request the enforcement of public procurement regulations and their rights under those regulations in cases where CAs fail to comply with the legal framework for public procurement.
 
-## Backgound
+## Background
 
 Detailed provisions relating to the types of remedy available are generally subject to local law. But generally speaking,  four types of remedies are available: 
 - Interim measures
 - Set aside of decisions 
 - Annulment of a Concluded Contract
 - Damages
+- Alternative penalties ([suggested](https://github.com/uStudioCompany/eOCDS-reviewProcedures/issues/3) by @JachymHercher)
 
 ### Types of remedies
 #### Interim measures
@@ -35,6 +36,10 @@ The annulment of an already concluded contract or a declaration that the contrac
 #### Damages
 
 Damages are compensation paid to economic operators harmed by an infringement of the public procurement rules. The procedure and venue for bringing claims for damages depends on local legislation, which sets the filing rules, deadlines, requirements of proof, and extent of compensation (for example, the conditions under which tendering costs can be recovered). This remedy aims to compensate harmed economic operators. 
+
+#### Alternative penalties
+
+Alternative penalties are, for example, reducing the duration of the contract or fines for the contracting authority. (The difference between damages and fines is that the damage goes to the company, while the fine goes to the public budget.)
 
 ### Timeframe
 
