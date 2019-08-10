@@ -1,7 +1,7 @@
 {
   "properties":{
     "reviewProceedings":{
-`     "title":"",
+      "title":"",
       "description":"",
       "$ref":"#/definitions/ReviewProceedings"
     }
