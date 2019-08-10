@@ -6,28 +6,28 @@
           "title": "Review Period",
           "description": "The certian period to complain on published conditions",
           "$ref": "#/definitions/Period"
-        }
-      }
-    },
-    "ReviewProceedings": {
-      "title": "Review Proceedings",
-      "description": "General information related to reviews under this contracting process together with collected complaints and reviews",
-      "type": "object",
-      "properties": {
-        "complaints": {
-          "title": "Complaints",
-          "description": "Complaints to the conditions and decisions",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Complaint"
-          }
         },
-        "reviews": {
-          "title": "Reviews",
-          "description": "Review Procedures conducted due to complaints received",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Review"
+        "reviewProceedings": {
+          "title": "Review Proceedings",
+          "description": "General information related to reviews under this contracting process together with collected complaints and reviews",
+          "type": "object",
+          "properties": {
+            "complaints": {
+              "title": "Complaints",
+              "description": "Complaints to the conditions and decisions",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Complaint"
+              }
+            },
+            "reviews": {
+              "title": "Reviews",
+              "description": "Review Procedures conducted due to complaints received",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Review"
+              }
+            }
           }
         }
       }
@@ -301,7 +301,7 @@
         }
       }
     },
-    "objectionResponse": {
+    "ObjectionResponse": {
       "properties": {
         "id": {
           "title": "Identifier",
