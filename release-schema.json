@@ -1,4 +1,11 @@
 {
+  "properties:{
+    "reviewProceedings":{
+`     "title":"",
+      "description":"",
+      "$ref":"#/definitions/ReviewProceedings"
+    }
+  },
   "definitions": {
     "Tender": {
       "properties": {
@@ -7,27 +14,47 @@
           "description": "The certian period to complain on published conditions",
           "$ref": "#/definitions/Period"
         },
-        "reviewProceedings": {
-          "title": "Review Proceedings",
-          "description": "General information related to reviews under this contracting process together with collected complaints and reviews",
-          "type": "object",
-          "properties": {
-            "complaints": {
-              "title": "Complaints",
-              "description": "Complaints to the conditions and decisions",
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Complaint"
-              }
-            },
-            "reviews": {
-              "title": "Reviews",
-              "description": "Review Procedures conducted due to complaints received",
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Review"
-              }
-            }
+        "complaints": {
+          "title": "Comlaints",
+          "description": "Any comlaints related to this tender",
+          "type":"array",
+          "items":{
+            "$ref": "#/definitions/RelatedComplaint"
+          }
+        }
+      }
+    },
+    "Award":{
+      "properties": {
+        "complaints": {
+          "title": "Comlaints",
+          "description": "Any comlaints related to this award",
+          "type":"array",
+          "items":{
+            "$ref": "#/definitions/RelatedComplaint"
+          }
+        }
+      }
+    },
+    "ReviewProceedings": {
+      "title": "Review Proceedings",
+      "description": "General information related to reviews under this contracting process together with collected complaints and reviews",
+      "type": "object",
+      "properties": {
+        "complaints": {
+          "title": "Complaints",
+          "description": "Complaints to the conditions and decisions",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Complaint"
+          }
+        },
+        "reviews": {
+          "title": "Reviews",
+          "description": "Review Procedures conducted due to complaints received",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Review"
           }
         }
       }
@@ -58,6 +85,24 @@
           "enum": [],
           "openCodelist": false,
           "codelist": "complaintStatuses.csv"
+        },
+        "relatesTo": {
+          "title": "Relates to",
+          "description": "The schema element that the complaint affects. For example complaint may be defined against lot or against prequalification",
+          "type": "string",
+          "enum": [
+            "tender",
+            "lot",
+            "award",
+            "prequalification"
+          ],
+          "openCodelist": false,
+          "codelist": "complaintRelatesTo.csv"
+        },
+        "relatedItem": {
+          "title": "Related item",
+          "description": "The id of the schema element which the objection affects on. ",
+          "type": "string"
         },
         "statusDetails": {
           "title": "Status details",
@@ -317,7 +362,11 @@
           "type": "string",
           "format": "date-time"
         },
-        "requestedAction": "request-1-1-1",
+        "requestedAction": {
+          "title": "Requested action",
+          "description": "An id of the requested action against whitch this response is published",
+          "type": "string"
+        },
         "decision": {
           "title": "Decision",
           "description": "The code of decision made",
@@ -335,6 +384,11 @@
           "type": "string"
         }
       }
+    },
+    "RelatedComplaint":{
+      "title": "Related Complaint",
+      "description": "The id of the related complaint",
+      "type": "string"
     }
   }
 }
