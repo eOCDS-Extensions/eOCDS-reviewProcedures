@@ -311,7 +311,7 @@ Review Body accepts the complaint and publishes the decision:
 
 Complaint is fully satisfied. Procuring Entity obliged to implement actions prescribed by Review Body decision within indicated deadline (*milestone.type:x_implementation*)
 
-> An issue here: [**How to arrange a decision implementation steps**](https://github.com/PaulBoroday/eOCDS-reviewProcedures/issues/1)
+> An issue here: [**How to arrange a decision implementation steps**](https://github.com/eOCDS-Extensions/eOCDS-reviewProcedures/issues/8)
 
 ### Complaints on decisions
 
@@ -344,7 +344,7 @@ And being affected, tenderer1 rises with a complaint: Tenderer1 wants to appeal 
 >- several appeals submitted by tenderer or tenderers - several review procudures
 >- several appeals submitted by tenderer or tenderers - one review procudure
 
-> An issue here - [**United appeal covering several cases submitted by tenderer - splitting into several review procedures. Does it makes sense?**](https://github.com/PaulBoroday/eOCDS-reviewProcedures/issues/2)
+> An issue here - [**United appeal covering several cases submitted by tenderer - splitting into several review procedures. Does it makes sense?**](https://github.com/eOCDS-Extensions/eOCDS-reviewProcedures/issues/7)
 
 ```
 {
