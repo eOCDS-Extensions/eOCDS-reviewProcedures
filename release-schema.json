@@ -122,7 +122,7 @@
           "description": "Legal entity who have submitted this complaint",
           "$ref": "#/definitions/OrganizationReference"
         },
-        "adressedTo": {
+        "addressedTo": {
           "title": "Adressed to",
           "description": "Body challenged by this complait",
           "type": "string",
