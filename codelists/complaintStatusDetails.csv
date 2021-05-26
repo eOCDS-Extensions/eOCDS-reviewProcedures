@@ -1,1 +1,9 @@
 code,title,description
+draft,Draft,
+accepted,Accepted,
+rejected,Rejected,
+declined,Declined,
+sasisfied,Satisfied,
+partiallySatisfied, Partially satisfied, 
+resolved,Resolved,
+notResolved, Not resolved,
