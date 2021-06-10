@@ -1,0 +1,38 @@
+{
+  "name": {
+    "en": "OCDS for the Review Procedures"
+  },
+  "description": {
+    "en": "Collects, into a single extension, the extensions that compose the OCDS for the Review Procedure implementation in e-GP"
+  },
+  "documentationUrl": {
+    "en": "https://github.com/eOCDS-Extensions/eOCDS-reviewProcedures"
+  },
+  "compatibility": [
+    "1.1"
+  ],
+  "schemas": [
+    "https://raw.githubusercontent.com/open-contracting-extensions/ocds_requirements_extension/master/release-schema.json",
+    "https://raw.githubusercontent.com/eOCDS-Extensions/eOCDS-internalId/master/release-schema.json",
+    "https://raw.githubusercontent.com/eOCDS-Extensions/eOCDS-evidences/master/release-schema.json",
+    "https://gitlab.com/dncp-opendata/ocds_statusdetails_extension/-/blob/master/release-schema.json"
+  ],
+  "codelists": [
+    "complaintAddressedTo.csv",
+    "complaintStatusDetails.csv",
+    "complaintStatuses.csv",
+    "conclusionStatuses.csv",
+    "decisionType.csv",
+    "objectionRelatesTo.csv",
+    "objectionResponseDecisions.csv",
+    "requestedActionSource.csv",
+    "requestedActionTypes.csv",
+    "reviewProcedureStatusDetails.csv",
+    "reviewProcedureStatuses.csv",
+    "evidenceTypes.csv"
+  ],
+  "contactPoint": {
+    "name": "uStudio Company",
+    "email": "lab@ustudio.company"
+  }
+}
