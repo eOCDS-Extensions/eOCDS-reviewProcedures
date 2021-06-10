@@ -55,9 +55,7 @@ Contracting authorities are required to wait for a certain number of days betwee
 
 ## Approach
 
-So we have a procurement process divided into two lots. The review period for complaints on conditions is scheduled and established initially.
-
-### Complaints on conditions
+E.g., there is a procurement process divided into two lots with a set of the related conditions and requirements expressed as a criteria array (see [ESPD2OCDS](https://github.com/uStudioCompany/espd2ocds) for more details). A review period for complaints on conditions is scheduled and established initially.
 
 ```
 {
@@ -70,21 +68,25 @@ So we have a procurement process divided into two lots. The review period for co
         "id": "lot-2"
       }
     ],
-    "reviewPeriod": {}
+    "reviewPeriod": {},
+    "criteria": []
   }
 }
 ```
+
+### Complaints on conditions
 Somewhere during submission period (within determined review period), a complaint on the conditions appears. This complaint containts: 
-- complainer info
+- complainant info
+- high-level description of complaint
 - responsible party
 - initial schedule
-- documents 
-- objections (basically what *complainer* wants *responsible party* to do. But this specific information provided in a bit structured way: not only free-text description but also):
+- any documents related to this complaint 
+- objections (basically what *complainant* wants *responsible party* to do. But this specific information provided in a bit structured way: not only free-text description but also):
  - machine-readable relations on kind and precise id of the object of complaint (in this case - lot)
  - classification according to Review Bodies' approach to systemize subjects of complaint (in Moldova, for example, there is a classifier of twelve main subjects of complaint)
  - set of requested actions to be taken to satisfy an objection
 
-And as [Chris Smith mentioned](https://github.com/open-contracting/standard/issues/598#issuecomment-346432364) - this first appeal addressed to the Procuring Entity. It works in the same way in Ukraine: first, you have to ask Procuring Entity and if not satisfied - second kick - Review Body
+And as [Chris Smith mentioned](https://github.com/open-contracting/standard/issues/598#issuecomment-346432364) - this first appeal addressed to the Procuring Entity. And if not satisfied - to Review Body
 
 ```
 {
@@ -95,21 +97,17 @@ And as [Chris Smith mentioned](https://github.com/open-contracting/standard/issu
         "date": "2019-02-21T08:37:54Z",
         "status": "pending",
         "description": "Complaint on conditions",
-        "complainer": {},
-        "adressedTo": "procuringEntity",
+        "complainant": {
+          "id": "",
+          "name": ""
+        },
+        "addressedTo": "procuringEntity",
         "milestones": [
           {
             "id": "1",
             "type": "x_acceptance",
             "description": "Precise date when complaint has to be either accepted or declined",
             "dueDate": "2019-02-24T08:00:00Z",
-            "status": "scheduled"
-          },
-          {
-            "id": "2",
-            "type": "x_review",
-            "description": "Indicative date when complaint has to be reviewed",
-            "dueDate": "2019-02-28T18:00:00Z",
             "status": "scheduled"
           }
         ],
@@ -118,20 +116,26 @@ And as [Chris Smith mentioned](https://github.com/open-contracting/standard/issu
           {
             "id": "objection-1-1",
             "description": "Objections' brief description",
-            "status": "pending",
-            "relatesTo": "lot",
-            "relatedItem": "lot-1",
+            "relatesTo": "requirement",
+            "relatedItem": "requirement-1",
             "classification": {
-              "scheme": "MD-ANSC",
-              "id": "DA-3 ",
-              "description": "Discriminatory technical, economic or financial specifications"
+              "scheme": "",
+              "id": "",
+              "description": ""
             },
-            "requestedActions": [
+            "arguments": [
+              { 
+                "id": "argument-1-1-1",
+                "description": "A substance of an argument",
+                "evidences": [] 
+              }
+            ],
+            "requestedRemedies": [
               {
                 "id": "request-1-1-1",
                 "type": "setAside",
                 "source": "procuringEntity",
-                "description": "Remove discriminatory technical, economic or financial specifications"
+                "description": "Remove discriminatory specifications"
               }
             ]
           }
@@ -142,7 +146,38 @@ And as [Chris Smith mentioned](https://github.com/open-contracting/standard/issu
 }
 ```
 
-Here and below array of *complaints* included into the *review Proceedings* object on the top of *release* because reviews and decisions against received *complaints* should be designed as a separate *array* instead of additional attribetues of *complaints* item:
+As it is shown in an example, a number of service-data to be generated automatically and added to a data-set. Such as:
+- complaint id
+- registration date
+- initial status of this complaint
+- a milestone of decision on acceptance of this complaint for a farther review
+
+Here and below the array of complaints included into the reviewProceedings object on the top of release because reviews and decisions against received complaints should be designed as a separate array instead of additional attributes of complaints item.
+Thus, the requested body (in this case - Procuring Entity) has accepted a complaint for review. 
+
+```
+{
+  "reviewProceedings": {
+   "complaints": [
+      {
+        "id": "complaint-1",
+        "date": "2019-02-21T08:37:54Z",
+        "status": "active",
+        "statusDetails": "accepted"
+      }
+    ],
+    "reviews": [
+      {
+        "id": "review-1",
+        "date": "2019-02-23T22:10:00Z",
+        "status": "active"
+      }
+    ]
+  }
+}
+```
+
+In order to reflect its decision, PE reviews each objection and the arguments one by one with reflecting a result of such a review: 
 
 ```
 {
@@ -151,8 +186,7 @@ Here and below array of *complaints* included into the *review Proceedings* obje
       {
         "id": "review-1",
         "date": "2019-02-23T22:10:00Z",
-        "status": "complete",
-        "statusDetails": "negative",
+        "status": "complete"
         "relatedComplaints": [
           "complaint-1"
         ],
@@ -168,42 +202,72 @@ Here and below array of *complaints* included into the *review Proceedings* obje
           {
             "id": "response-1-1-1",
             "date": "2019-02-24T10:00:00Z",
-            "requestedAction": "request-1-1-1",
-            "decision": "rejected",
-            "justification": "Because we are desagree"
+            "relatedArgument": "argument-1-1-1",
+            "decision": "declined",
+            "justification": "Because we are disagree"
           }
         ],
-        "documents": []
+         "decisions": [
+          {
+            "id": "1",
+            "date": "",
+            "type": "decree",
+            "internalID": "",
+            "decisionDate": "",
+            "description": "",
+            "resolution": "",
+            "conclusions": [
+              {
+                "id": "conclusion-1-1",
+                "relatedObjection": "objection-1-1",
+                "status": "declined"
+              }
+            ],
+            "documents": []
+          }
+        ]
       }
     ]
   }
 }
 ```
-As we can see, by rejecting the only requested action, the Procuring Entity rejected the complaint. First complaint goes to *status:rejected* and *complainer* goes to the second kick: Review Body. Indicating rejected *complaint-1* as *previous proceeding*, *complainer* requests three *actions* instead of one: 
+
+By rejecting the only objection, the Procuring Entity rejects the entire complaint. The complaint goes to a negative status. 
+
+```
+{
+  "reviewProceedings": {
+    "complaints": [
+      {
+        "id": "complaint-1",
+        "date": "2019-02-21T08:37:54Z",
+        "status": "complete",
+        "statusDetails": "declined"
+      }
+    ]
+  }
+}
+```
+
+The complainant goes to the Review Body. Indicating rejected complaint-1 as previousProceeding, complainant requests three actions instead of one:
 
 ```
 {
   "reviewProceedings":{
-    "complaints:[
+    "complaints":[
       {
         "id": "complaint-2",
-        "date": "2019-02-24T11:00:00Z",
-        "status": "pending"
+        "date": "2019-02-24",
+        "status": "pending",
         "description": "Complaint brief description",
-        "complainer": {},
-        "adressedTo": "reviewBody",
-        "previousProceeding": "complaint-1"
+        "complainant": {},
+        "addressedTo": "reviewBody",
+        "previousProceeding": "complaint-1",
         "milestones": [
           {
             "id": "1",
             "type": "x_acceptance",
             "dueDate": "2019-02-27T08:00:00Z",
-            "status": "scheduled"
-          },
-          {
-            "id": "2",
-            "type": "x_review",
-            "dueDate": "2019-03-05T18:00:00Z",
             "status": "scheduled"
           }
         ],
@@ -212,15 +276,21 @@ As we can see, by rejecting the only requested action, the Procuring Entity reje
           {
             "id": "objection-2-1",
             "description": "Objections' brief description",
-            "status": "pending",
-            "relatesTo": "lot",
-            "relatedItem": "lot-1",
+            "relatesTo": "requirement",
+            "relatedItem": "requirement-1",
             "classification": {
-              "scheme": "MD-ANSC",
-              "id": "DA-3",
-              "description": "Discriminatory technical, economic or financial specifications in the contract notice"
+              "scheme": "",
+              "id": "",
+              "description": ""
             },
-            "requestedActions": [
+            "arguments": [
+              { 
+                "id": "argument-2-1-1",
+                "description": "A substance of an argument",
+                "evidences": [] 
+              }
+            ],
+            "requestedRemedies": [
               {
                 "id": "request-2-1-1",
                 "description": "Suspension of the implementation of procurement process",
@@ -231,7 +301,7 @@ As we can see, by rejecting the only requested action, the Procuring Entity reje
                 "id": "request-2-1-2",
                 "type": "setAside",
                 "source": "procuringEntity",
-                "description": "Remove discriminatory technical, economic or financial specifications in the contract notice"
+                "description": "Remove discriminatory specifications in the contract notice"
               },
               {
                 "id": "request-2-1-3",
@@ -247,12 +317,15 @@ As we can see, by rejecting the only requested action, the Procuring Entity reje
   }
 }
 ```
-Complainer requested Review Body:
-1. to suspend the procedure to avoid possible negative consequences
-2. to prescribe *Procuring Entity* to make changes according to objections' details
-3. to prescribe *Procuring Entity* to extend the initial submission deadline
 
-Review Body accepts the complaint and publishes the decision:
+Complainant requested Review Body:
+- to suspend the procedure to avoid possible negative consequences
+- to prescribe Procuring Entity to make changes according to objections' details
+- to prescribe Procuring Entity to extend the initial submission deadline
+
+Review Body accepts the complaint and publishes the relevant decision together with:
+- conclusion on acceptance
+- estimated schedule for this review process
 
 ```
 {
@@ -261,46 +334,99 @@ Review Body accepts the complaint and publishes the decision:
       {
         "id": "review-2",
         "date": "2019-02-27T07:42:00Z",
-        "status": "complete",
-        "statusDetails": "positive",
-        "relatedComplaints":[ 
+        "status": "active"
+        "relatedComplaints": [
           "complaint-2"
         ],
-        "objectionResponses": [
+        "decisions": [
           {
-            "id": "response-2-1-1",
-            "date": "2019-02-27T12:02:00Z",
-            "requestedAction": "request-2-1-1",
-            "decision": "satisfied",
-            "justification": ""
-          },
-          {
-            "id": "response-2-1-2",
-            "date": "2019-02-27T12:04:00Z",
-            "requestedAction": "request-2-1-2",
-            "decision": "satisfied",
-            "justification": ""
-          },
-          {
-            "id": "response-2-1-3",
-            "date": "2019-02-27T12:10:00Z",
-            "requestedAction": "request-2-1-3",
-            "decision": "satisfied",
-            "justification": ""
+            "id": "1",
+            "date": "",
+            "type": "acceptance",
+            "internalID": "",
+            "decisionDate": "",
+            "description": "",
+            "resolution": "",
+            "conclusions": [
+              {
+                "id": "conclusion-1-1",
+                "relatedObjection": "objection-2-1",
+                "status": "accepted"
+              }
+            ],
+            "documents": []
           }
         ],
-        "documents": [],
         "milestones": [
           {
             "id": "1",
-            "type": "x_review",
+            "type": "x_initiation",
             "dueDate": "2019-03-05T18:00:00Z",
-            "dateMet": "2019-02-27T12:10:00Z"
+            "status": "met"
           },
           {
             "id": "2",
-            "type": "x_implementation",
-            "dueDate": "2019-03-01T18:00:00Z"
+            "type": "x_review",
+            "dueDate": "2019-03-05T18:00:00Z",
+            "status": "scheduled",
+            "documents": []
+          },
+          {
+            "id": "3",
+            "type": "x_hearings",
+            "dueDate": "2019-03-05T18:00:00Z",
+            "status": "scheduled"
+          },
+          {
+            "id": "4",
+            "type": "x_resolution",
+            "dueDate": "2019-03-05T18:00:00Z",
+            "status": "scheduled"
+          },
+          {
+            "id": "5",
+            "type": "x_decision",
+            "dueDate": "2019-03-05T18:00:00Z",
+            "status": "scheduled"
+          }
+        ],
+        "parties": [
+          {
+            "id": "",
+            "name": "",
+            "roles": [
+              "complainant"
+            ],
+            "persons": [
+              {
+                "id": "",
+                "name": "",
+                "identifier": {},
+                "telephone": "",
+                "email": "",
+                "businessFunctions": []
+              }
+            ]
+          },
+          {
+            "id": "",
+            "name": "",
+            "roles": [
+              "responder"
+            ],
+            "persons": [
+              {
+                "id": "",
+                "name": "",
+                "identifier": {
+                  "id": "",
+                  "legalName": ""
+                },
+                "telephone": "",
+                "email": "",
+                "businessFunctions": []
+              }
+            ]
           }
         ]
       }
@@ -309,14 +435,122 @@ Review Body accepts the complaint and publishes the decision:
 }
 ```
 
-Complaint is fully satisfied. Procuring Entity obliged to implement actions prescribed by Review Body decision within indicated deadline (*milestone.type:x_implementation*)
+Review Body also requests Procuring Entity to respond on augments explained by a Complainant and PE responding with a justification against each argument of each objection of this specific complaint:
 
-> An issue here: [**How to arrange a decision implementation steps**](https://github.com/eOCDS-Extensions/eOCDS-reviewProcedures/issues/8)
+```
+{
+  "reviewProceedings": {
+    "reviews": [
+      {
+        "id": "review-2",
+        "date": "2019-02-27T07:42:00Z",
+        "status": "active",
+        "statusDetails": "accepted",
+        "objectionResponses": [
+          {
+            "id": "response-2-1-1",
+            "date": "2019-02-27T12:04:00Z",
+            "relatedArgument": "request-2-1-2",
+            "justification": ""
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+Once responses are received from Procuring Entity, Review Body is able to is able to conclude a decision: 
+
+```
+{
+  "reviewProceedings": {
+    "reviews": [
+      {
+        "id": "review-2",
+        "date": "",
+        "status": "active",
+        "statusDetails": "satisfied",
+        "decisions": [
+          {
+            "id": "1",
+            "date": "",
+            "type": "decree",
+            "internalID": "",
+            "decisionDate": "",
+            "title": "",
+            "description": "",
+            "resolution": "",
+            "statements": [
+              {
+                "id": "",
+                "relatedArgument": "argument-2-1-1",
+                "status": "satisfied",
+                "justification": ""
+              }
+            ],
+            "conclusions": [
+              {
+                "id": "conclusion-1",
+                "relatedObjection": "objection-2-1",
+                "status": "satisfied"
+              }
+            ],
+            "decrees": [
+              {
+                "id": "",
+                "relatedRemedy": "request-2-1-1",
+                "status": "satisfied"
+              },
+              {
+                "id": "",
+                "relatedRemedy": "request-2-1-2",
+                "status": "satisfied"
+              },
+              {
+                "id": "",
+                "relatedRemedy": "request-2-1-3",
+                "status": "satisfied"
+              }
+            ],
+            "documents": []
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+Complaint is fully satisfied. Procuring Entity obliged to implement actions prescribed by Review Body decision within indicated deadline (milestone.type:x_implementation). Such a measures have to be reported once implemented:
+
+```
+{
+  "reviewProceedings": {
+    "reviews": [
+      {
+        "id": "review-2",
+        "date": "",
+        "status": "complete",
+        "statusDetails": "resolved",
+        "decreeResponses":[
+          {
+            "id":"response",
+            "relatedDecree":"",
+            "isResolved":true,
+            "description":"",
+            "date":""
+          }
+        ]
+      }
+    ]
+  }
+}
+```
 
 ### Complaints on decisions
 
-Procurement process passed the submission and now it is on evaluation stage. As mentioned above - it's two lots inside. 
-Lets assume that four offers were submitted by two tenderers: one bid from each tenderer for each lots from those two. So we have a picture:
+Procurement process passed the tendering and now it is in the evaluation stage. As mentioned above - it's two lots inside. Let's assume that four offers were submitted by two tenderers: one bid from each tenderer for each lot from those two. So we have a picture:
 
 |            | tenderer1       | tenderer2        |
 | :--------- |:----------------| :----------------|
@@ -344,47 +578,37 @@ And being affected, tenderer1 rises with a complaint: Tenderer1 wants to appeal 
 >- several appeals submitted by tenderer or tenderers - several review procudures
 >- several appeals submitted by tenderer or tenderers - one review procudure
 
-> An issue here - [**United appeal covering several cases submitted by tenderer - splitting into several review procedures. Does it makes sense?**](https://github.com/eOCDS-Extensions/eOCDS-reviewProcedures/issues/7)
-
 ```
 {
   "reviewProceedings":{
-    "complaints:[
+    "complaints":[
       {
         "id": "complaint-3",
         "date": "2019-03-10T11:00:00Z",
-        "status": "",
+        "status": "pending",
         "description": "Complaint brief description",
-        "complainer": {},
-        "adressedTo": "reviewBody",
+        "complainant": {},
+        "addressedTo": "reviewBody",
         "milestones": [
           {
             "id": "1",
             "type": "x_acceptance",
             "dueDate": "2019-03-13T08:00:00Z",
             "status":"scheduled"
-          },
-          {
-            "id": "2",
-            "type": "x_review",
-            "dueDate": "2019-03-17T18:00:00Z",
-            "status":"scheduled"
           }
         ],
-        "documents": [],
         "objections": [
           {
             "id": "objection-3-1",
             "description": "Objections' brief description",
-            "status": "pending",
             "relatesTo": "award",
             "relatedItem": "award-4",
             "classification": {
-              "scheme": "MD-ANSC",
-              "id": "RP-3 ",
-              "description": "Acceptance by the CA of offers of other non-compliant or unacceptable participants"
+              "scheme": "",
+              "id": "",
+              "description": ""
             },
-            "requestedActions": [
+            "requestedRemedies": [
               {
                 "id": "request-3-1-1",
                 "description": "Suspension of the implementation of decision taken by CA",
@@ -402,15 +626,14 @@ And being affected, tenderer1 rises with a complaint: Tenderer1 wants to appeal 
           {
             "id": "objection-3-2",
             "description": "Objections' brief description",
-            "status": "pending",
             "relatesTo": "award",
             "relatedItem": "award-1",
             "classification": {
-              "scheme": "MD-ANSC",
-              "id": "RP-2",
-              "description": "Rejection of the submitted offer as inappropriate or unacceptable"
+              "scheme": "",
+              "id": "",
+              "description": ""
             },
-            "requestedActions": [
+            "requestedRemedies": [
               {
                 "id": "request-3-2-1",
                 "description": "Suspension of the implementation of decision taken by CA",
@@ -431,73 +654,11 @@ And being affected, tenderer1 rises with a complaint: Tenderer1 wants to appeal 
   }
 }
 ```
+
 In another words, tenderer1 asked Review Body:
 1. to suspend awarding and following contracting process for lot-1
 2. to prescribe Procuring Entity to annul his decision to disqualify tenderer1 (which means that PE has to re-decide on tenderers1 offer. Not neсessary to award it but disqualify again on another reason if any) 
 3. to suspend awarding and following contracting process for lot-2
 4. to prescribe Procuring Entity to annul his decision to award tenderer2 (which means that PE has to re-decide on tenderers2 offer. Not necessary to disqualify it but reward again by first correcting the inconsistencies indicated in the objections) 
 
-Review Body accepts this appeal and decides to satisfy it partially:
-
-```
-{
-   "reviewProceedings": {
-    "reviews": [
-      {
-        "id": "review-3",
-        "date": "2019-03-13T07:50:00Z",
-        "status": "complete",
-        "statusDetails": "partialyPositive",
-        "relatedComplaints": [
-          "complaint-3"
-        ],
-        "objectionResponses": [
-          {
-            "id": "response-3-1-1",
-            "date": "2019-03-17T14:00:00Z",
-            "requestedAction": "request-3-1-1",
-            "decision": "satisfied",
-            "justification": ""
-          },
-          {
-            "id": "response-3-1-2",
-            "date": "2019-03-17T14:25:00Z",
-            "requestedAction": "request-3-1-2",
-            "decision": "satisfied",
-            "justification": ""
-          },
-          {
-            "id": "response-3-2-1",
-            "date": "2019-03-17T14:58:00Z",
-            "requestedAction": "request-3-2-1",
-            "decision": "rejected",
-            "justification": ""
-          },
-          {
-            "id": "response-3-2-2",
-            "date": "2019-03-17T15:00:00Z",
-            "requestedAction": "request-3-2-2",
-            "decision": "rejected",
-            "justification": ""
-          }
-        ],
-        "documents": [],
-        "milestones": [
-          {
-            "id": "1",
-            "type": "x_review",
-            "dueDate": "2019-03-17T18:00:00Z",
-            "dateMet": "2019-03-17T15:00:00Z"
-          },
-          {
-            "id": "2",
-            "type": "x_implementation",
-            "dueDate": "2019-03-19T18:00:00Z"
-          }
-        ]
-      }
-    ]
-  }
-}
-```
-
+Review Body accepts this complaint, reviews it and decides  in a same way as in case of complaint on conditions.
