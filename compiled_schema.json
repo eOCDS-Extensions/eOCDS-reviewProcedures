@@ -1,44 +1,8 @@
 {
-  "properties":{
-    "reviewProceedings":{
-      "title":"",
-      "description":"",
-      "$ref":"#/definitions/ReviewProceedings"
-    }
-  },
-  "definitions": {
-    "Tender": {
-      "properties": {
-        "reviewPeriod": {
-          "title": "Review Period",
-          "description": "The certian period to complain on published conditions",
-          "$ref": "#/definitions/Period"
-        },
-        "complaints": {
-          "title": "Comlaints",
-          "description": "Any comlaints related to this tender",
-          "type":"array",
-          "items":{
-            "$ref": "#/definitions/RelatedComplaint"
-          }
-        }
-      }
-    },
-    "Award":{
-      "properties": {
-        "complaints": {
-          "title": "Comlaints",
-          "description": "Any comlaints related to this award",
-          "type":"array",
-          "items":{
-            "$ref": "#/definitions/RelatedComplaint"
-          }
-        }
-      }
-    },
-    "ReviewProceedings": {
-      "title": "Review Proceedings",
-      "description": "General information related to reviews under this contracting process together with collected complaints and reviews",
+  "properties": {
+    "reviewProceedings": {
+      "title": "",
+      "description": "",
       "type": "object",
       "properties": {
         "complaints": {
@@ -56,6 +20,108 @@
           "items": {
             "$ref": "#/definitions/Review"
           }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Tender": {
+      "properties": {
+        "reviewPeriod": {
+          "title": "Review Period",
+          "description": "The certian period to complain on published conditions",
+          "$ref": "#/definitions/Period"
+        }
+      }
+    },
+    "Award": {
+      "properties": {
+        "reviewPeriod": {
+          "title": "Review Period",
+          "description": "The certian period to complain on published decision",
+          "$ref": "#/definitions/Period"
+        }
+      }
+    },
+    "Decision": {
+      "title": "",
+      "description": "",
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "",
+          "description": "",
+          "type": "string"
+        },
+        "date": {
+          "title": "",
+          "description": "",
+          "type": "string",
+          "format": "date-time"
+        },
+        "type": {
+          "title": "",
+          "description": "",
+          "type": "string",
+          "openCodelist": true,
+          "codelist": "decisionType.csv"
+        },
+        "decisionDate": {
+          "title": "",
+          "descrition": "",
+          "type": "string",
+          "format": "date-time"
+        },
+        "internalId": {
+          "title": "",
+          "descrition": "",
+          "type": "string"
+        },
+        "description": {
+          "title": "",
+          "description": "",
+          "type": "string"
+        },
+        "resolution": {
+          "title": "",
+          "description": "",
+          "type": "string"
+        },
+        "statements": {
+          "title": "",
+          "description": "",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BodyResponse"
+          }
+        },
+        "conclusions": {
+          "title": "",
+          "description": "",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Conclusion"
+          }
+        },
+        "documents": {
+          "title": "",
+          "description": "",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Document"
+          }
+        }
+      }
+    },
+    "Conclusion": {
+      "title": "",
+      "description": "",
+      "type": "object",
+      "properties": {
+        "id": {},
+        "relatedObjection": {},
+        "status": {
+          "codelist": "conclusionStatuses.csv"
         }
       }
     },
@@ -82,33 +148,13 @@
           "title": "Status",
           "description": "The current status of the complaint",
           "type": "string",
-          "enum": [],
           "openCodelist": false,
           "codelist": "complaintStatuses.csv"
-        },
-        "relatesTo": {
-          "title": "Relates to",
-          "description": "The schema element that the complaint affects. For example complaint may be defined against lot or against prequalification",
-          "type": "string",
-          "enum": [
-            "tender",
-            "lot",
-            "award",
-            "prequalification"
-          ],
-          "openCodelist": false,
-          "codelist": "complaintRelatesTo.csv"
-        },
-        "relatedItem": {
-          "title": "Related item",
-          "description": "The id of the schema element which the objection affects on. ",
-          "type": "string"
         },
         "statusDetails": {
           "title": "Status details",
           "description": "The details of current status of the complaint",
           "type": "string",
-          "enum": [],
           "openCodelist": false,
           "codelist": "complaintStatusDetails.csv"
         },
@@ -117,8 +163,8 @@
           "description": "Free-text description for this complaint provided by complainer",
           "type": "string"
         },
-        "complainer": {
-          "title": "Complainer",
+        "complainant": {
+          "title": "Complainant",
           "description": "Legal entity who have submitted this complaint",
           "$ref": "#/definitions/OrganizationReference"
         },
@@ -187,7 +233,6 @@
           "title": "Status",
           "description": "The current status of the procedure",
           "type": "string",
-          "enum": [],
           "openCodelist": false,
           "codelist": "reviewProcedureStatuses.csv"
         },
@@ -195,11 +240,6 @@
           "title": "Status details",
           "description": "The details of current status of the procedure",
           "type": "string",
-          "enum": [
-            "negative",
-            "partiallyPositive",
-            "positive"
-          ],
           "openCodelist": false,
           "codelist": "reviewProcedureStatusDetails.csv"
         },
@@ -229,12 +269,34 @@
         },
         "objectionResponses": {
           "title": "Objection responses",
-          "description": "A list of responses against all actions requested under relatede complaints",
+          "description": "A list of responses against all the arguments under relatede complaints",
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Objection"
+            "$ref": "#/definitions/BodyResponse"
+          }
+        },
+        "decisions": {
+          "title": "",
+          "description": "",
+          "type": "array",
+          "items": {
+            "$ref": "#/Definitions/Decision"
+          }
+        },
+        "decreeResponses": {
+          "items": {
+            "$ref": "#/definitions/DecreeResponse"
           }
         }
+      }
+    },
+    "DecreeRespopnse": {
+      "properties": {
+        "id": {},
+        "relatedDecree": {},
+        "isResolved": {},
+        "description": {},
+        "date": {}
       }
     },
     "Objection": {
@@ -254,22 +316,6 @@
           "title": "Description",
           "description": "Bojections' brief description provided by complainer",
           "type": "string"
-        },
-        "status": {
-          "title": "Status",
-          "description": "The current status of the objection",
-          "type": "string",
-          "enum": [],
-          "openCodelist": false,
-          "codelist": "objectionStatuses.csv"
-        },
-        "statusDetails": {
-          "title": "Status details",
-          "description": "The details of current status of the objection",
-          "type": "string",
-          "enum": [],
-          "openCodelist": false,
-          "codelist": "objectionStatusDetails.csv"
         },
         "relatesTo": {
           "title": "Relates to",
@@ -292,17 +338,50 @@
           "description": "Classification according to Review Bodies' approach to systemize subjects of complaint",
           "$ref": "#/definitions/Classification"
         },
-        "requestedActions": {
+        "requestedRemeies": {
           "title": "Requested actions",
           "description": "A list of precise actions requested under this objection",
           "type": "array",
           "items": {
-            "$ref": "#/definitions/RequestedAction"
+            "$ref": "#/definitions/Remedy"
+          }
+        },
+        "arguments": {
+          "title": "Arguments",
+          "description": "The arguments protecting this objection",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Argument"
           }
         }
       }
     },
-    "RequestedAction": {
+    "Argument": {
+      "title": "Argument",
+      "descrition": "The argument attached by the Complainant as a justification for the objection as part of the complaint",
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "Identifier",
+          "description": "A unique identifier of this argument",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "description": "A free-text content of this argument",
+          "type": "string"
+        },
+        "evidences": {
+          "title": "Evidences",
+          "description": "A list of evidences attached",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Evidence"
+          }
+        }
+      }
+    },
+    "Remedy": {
       "title": "Requested action",
       "description": "A precise action requested to satisfy an objection under complaint",
       "type": "object",
@@ -346,7 +425,7 @@
         }
       }
     },
-    "ObjectionResponse": {
+    "BodyResponse": {
       "properties": {
         "id": {
           "title": "Identifier",
@@ -362,21 +441,17 @@
           "type": "string",
           "format": "date-time"
         },
-        "requestedAction": {
-          "title": "Requested action",
-          "description": "An id of the requested action against whitch this response is published",
+        "relatedArgument": {
+          "title": "Related Argument",
+          "description": "A link to an argument addressed by this response",
           "type": "string"
         },
         "decision": {
-          "title": "Decision",
-          "description": "The code of decision made",
+          "title": "",
+          "description": "",
           "type": "string",
-          "enum": [
-            "rejected",
-            "satisfied"
-          ],
           "openCodelist": false,
-          "codelist": "objectionResopnseDecisions.csv"
+          "codelist": "objectionResponseDecisions.csv"
         },
         "justification": {
           "title": "Justification",
@@ -385,10 +460,82 @@
         }
       }
     },
-    "RelatedComplaint":{
+    "RelatedComplaint": {
       "title": "Related Complaint",
       "description": "The id of the related complaint",
       "type": "string"
+    },
+    "Period": {
+      "title": "Period",
+      "type": "object",
+      "properties": {
+        "startDate": {
+          "title": "Start date",
+          "description": "The start date for the period",
+          "type": "string",
+          "format": "date-time"
+        },
+        "endDate": {
+          "title": "End date",
+          "description": "The end date for the period",
+          "type": "string",
+          "format": "date-time"
+        },
+        "maxExtentDate": {
+          "description": "The period cannot be extended beyond this date.",
+          "format": "date-time",
+          "title": "Maximum extent",
+          "type": "string"
+        },
+        "durationInDays": {
+          "description": "The maximum duration of this period in days. Where a start and end date are given, this field is optional, and should reflect the difference between those two days.",
+          "title": "Duration (days)",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "duration": {
+          "title": "Duration",
+          "description": "The duration of the period reflected in ISO format",
+          "type": "string",
+          "format": "ISO"
+        }
+      }
+    },
+    "Evidence": {
+      "title": "",
+      "description": "",
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "",
+          "description": "",
+          "type": ""
+        },
+        "type": {
+          "title": "",
+          "description": "",
+          "type": "string",
+          "codelist": "evidenceTypes.csv",
+          "opencodelist": true
+        },
+        "title": {
+          "title": "",
+          "description": "",
+          "type": ""
+        },
+        "description": {
+          "title": "",
+          "description": "",
+          "type": ""
+        },
+        "relatedDocument": {
+          "title": "",
+          "description": "",
+          "$ref": "#/definitions/Document"
+        }
+      }
     }
   }
 }
